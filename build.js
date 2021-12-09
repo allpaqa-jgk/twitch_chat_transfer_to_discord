@@ -35,7 +35,6 @@ async function makeReleaseFiles(options) {
 
   const dirList = [
     { name: "./", addKeepFile: false },
-    { name: "./node_modules", addKeepFile: false },
     { name: "./config", addKeepFile: false },
   ];
 
