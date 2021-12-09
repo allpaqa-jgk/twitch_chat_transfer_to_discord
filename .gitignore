@@ -68,6 +68,7 @@ config/*.json
 
 .cache
 .nexe
+.ssh
 .vscode
 .yarn
 .bash_history
