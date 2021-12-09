@@ -36,23 +36,6 @@ if (config.TW_OAUTH_TOKEN && config.TW_CHANNEL_NAME) {
   });
 }
 
-// Called every time a message comes in
-function onMessageHandler(target, context, msg, self) {
-  if (self) {
-    return;
-  } // Ignore messages from the bot
-
-  // DEBUG
-  logger.debug('target', target)
-  logger.debug('context', context)
-
-  // Remove whitespace from chat message
-  const name = mergeUserDisplayName(context);
-  const discordSegment = "`" + name + "`: " + escapeMassMension(msg);
-
-  sendToDiscord(discordSegment);
-}
-
 function sendToDiscord(msg) {
   if (!msg) {
     // send to discord
@@ -85,12 +68,28 @@ function mergeUserDisplayName(context) {
 }
 
 function escapeMassMension(msg) {
-  return msg.replace("@", "`@`");
+  return msg
+    .replace(/^[!?！？`]+/, "")
+    .replace(/`/g, "¥`")
+    .replace(/@/g, "`@`")
 }
 
-// function escapeTtsErrorString(msg) {
-//   return msg.replace(/[!?！？`]/g, "");
-// }
+// Called every time a message comes in
+function onMessageHandler(target, context, msg, self) {
+  if (self) {
+    return;
+  } // Ignore messages from the bot
+
+  // DEBUG
+  logger.debug('target', target)
+  logger.debug('context', context)
+
+  // Remove whitespace from chat message
+  const name = mergeUserDisplayName(context);
+  const discordSegment = "`" + name + "`: " + escapeMassMension(msg);
+
+  sendToDiscord(discordSegment);
+}
 
 // Called every time the bot connects to Twitch chat
 function onConnectedHandler(addr, port) {
