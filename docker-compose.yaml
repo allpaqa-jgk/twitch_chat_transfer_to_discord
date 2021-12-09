@@ -1,0 +1,10 @@
+version: "3"
+
+services:
+  bot:
+    image: ghcr.io/parkervcp/yolks:nodejs_16
+    tty: true
+    working_dir: /home/container
+    volumes:
+      - .:/home/container
+    command: yarn dev

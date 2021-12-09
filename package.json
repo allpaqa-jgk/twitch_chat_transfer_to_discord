@@ -1,0 +1,60 @@
+{
+  "private": true,
+  "version": "0.0.0",
+  "name": "twitch_chat_transfer_to_discord",
+  "description": "TextToSpeech bot for twitch.tv. and share all comment to discord channel. remember and forget function convert commented keywords to another string before passed to TTS.",
+  "license": "MIT",
+  "homepage": "https://github.com/allpaqa-jgk/twitch_chat_transfer_to_discord",
+  "bug": "https://github.com/allpaqa-jgk/twitch_chat_transfer_to_discord/issues",
+  "repository": "https://github.com/allpaqa-jgk/twitch_chat_transfer_to_discord",
+  "author": {
+    "name": "allpaqa-jgk"
+  },
+  "files": [
+    "LICENSE",
+    "README.md",
+    "config/*.sample",
+    ".eslintrc.js",
+    ".gitignore",
+    ".vscode",
+    "index.js",
+    "src",
+    "package.json",
+    "yarn.lock"
+  ],
+  "main": "main.js",
+  "scripts": {
+    "dev": "NODE_ENV=development node ./index.js",
+    "start": "node ./index.js",
+    "lint": "eslint src",
+    "build": "node ./build.js"
+  },
+  "engines": {
+    "node": "^16.13",
+    "yarn": "^1.22"
+  },
+  "dependencies": {
+    "config": "^3.3.6",
+    "discord.js": "^13.3.1",
+    "forever": "^4.0.1",
+    "forever-monitor": "^3.0.3",
+    "lodash.merge": "^4.6.2",
+    "log4js": "^6.3.0",
+    "request": "^2.88.2",
+    "request-promise": "^4.2.6",
+    "tmi.js": "^1.8.5"
+  },
+  "devDependencies": {
+    "eslint": "^8.4.1",
+    "eslint-cli": "^1.1.1",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-config-standard": "^16.0.3",
+    "eslint-plugin-import": "^2.25.3",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-promise": "^5.2.0",
+    "eslint-plugin-standard": "^5.0.0",
+    "nexe": "^4.0.0-beta.19",
+    "prettier": "^2.5.1"
+  }
+}
