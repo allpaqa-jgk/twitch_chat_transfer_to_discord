@@ -1,7 +1,7 @@
 const { logger } = require("./logger");
 const tmi = require("tmi.js");
 const config = require("config");
-const discordBot = require("./discordBot");
+const discordBotClient = require("./discordBot").client
 // console.info("config", config)
 let client;
 
@@ -42,7 +42,7 @@ function sendToDiscord(msg) {
     logger.debug('active message')
     return;
   }
-  discordBot.client.channels
+  discordBotClient.channels
     .fetch(config.DISCORD_CHANNEL_ID)
     .then((channel) => {
       logger.debug("channel", channel.name);
@@ -105,4 +105,17 @@ function onDisconnectedHandler(reason) {
         logger.error(e);
       });
   }, 5000);
+}
+
+// discord
+discordBotClient.on("messageCreate", onMessageCreateHandler);
+// ignore self comment
+function onMessageCreateHandler(message) {
+  if (!message.author.bot && !message.author.system) {
+    logger.mark(message)
+
+    const username = message.author.username
+    const content = message.content
+    client.say(config.TW_CHANNEL_NAME, `from discord [${username}] ${content}`)
+  }
 }
