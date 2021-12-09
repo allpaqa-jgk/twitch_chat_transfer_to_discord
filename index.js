@@ -8,9 +8,9 @@ const path = require("path");
 // init process.env
 process.env.NODE_CONFIG_DIR = path.join(__dirname, "./config");
 
-logger.info("//////////////////////");
-logger.info("//  Ctrl-C to exit  //");
-logger.info("//////////////////////");
+logger.mark("//////////////////////");
+logger.mark("//  Ctrl-C to exit  //");
+logger.mark("//////////////////////");
 
 const child = new forever.Monitor(path.join(__dirname, "./src/twitchBot.js"), {
   //
