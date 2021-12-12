@@ -2,7 +2,7 @@ const { logger } = require("./logger");
 const tmi = require("tmi.js");
 const config = require("config");
 const discordBotClient = require("./discordBot").client;
-logger.dev("config", config);
+logger.debug("config", config);
 let client;
 
 logger.mark("* tmi is starting...");
