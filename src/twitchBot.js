@@ -1,12 +1,12 @@
 const { logger } = require("./logger");
 const tmi = require("tmi.js");
 const config = require("config");
-const discordBotClient = require("./discordBot").client
-// console.info("config", config)
+const discordBotClient = require("./discordBot").client;
+logger.dev("config", config);
 let client;
 
 logger.mark("* tmi is starting...");
-  
+
 function botUsername() {
   return config.BOT_USERNAME || config.TW_CHANNEL_NAME + "_bot";
 }
@@ -39,7 +39,7 @@ if (config.TW_OAUTH_TOKEN && config.TW_CHANNEL_NAME) {
 function sendToDiscord(msg) {
   if (!msg) {
     // send to discord
-    logger.debug('active message')
+    logger.debug("active message");
     return;
   }
   discordBotClient.channels
@@ -47,7 +47,7 @@ function sendToDiscord(msg) {
     .then((channel) => {
       logger.debug("channel", channel.name);
       if (channel) {
-        logger.debug('msg', msg)
+        logger.debug("msg", msg);
 
         return channel.send(msg).catch((e) => {
           logger.info(e);
@@ -58,8 +58,8 @@ function sendToDiscord(msg) {
 }
 
 function mergeUserDisplayName(context) {
-  const username = context.username
-  const displayname = context["display-name"]
+  const username = context.username;
+  const displayname = context["display-name"];
   if (username === displayname) {
     return username;
   } else {
@@ -71,7 +71,7 @@ function escapeMassMension(msg) {
   return msg
     .replace(/^[!?！？`]+/, "")
     .replace(/`/g, "¥`")
-    .replace(/@/g, "`@`")
+    .replace(/@/g, "`@`");
 }
 
 // Called every time a message comes in
@@ -81,8 +81,8 @@ function onMessageHandler(target, context, msg, self) {
   } // Ignore messages from the bot
 
   // DEBUG
-  logger.debug('target', target)
-  logger.debug('context', context)
+  logger.debug("target", target);
+  logger.debug("context", context);
 
   // Remove whitespace from chat message
   const name = mergeUserDisplayName(context);
@@ -112,10 +112,10 @@ discordBotClient.on("messageCreate", onMessageCreateHandler);
 // ignore self comment
 function onMessageCreateHandler(message) {
   if (!message.author.bot && !message.author.system) {
-    logger.mark(message)
+    logger.info(message);
 
-    const username = message.author.username
-    const content = message.content
-    client.say(config.TW_CHANNEL_NAME, `from discord [${username}] ${content}`)
+    const username = message.author.username;
+    const content = message.content;
+    client.say(config.TW_CHANNEL_NAME, `from discord [${username}] ${content}`);
   }
 }
