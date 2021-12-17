@@ -81,11 +81,12 @@ function onMessageHandler(target, context, msg, self) {
   } // Ignore messages from the bot
 
   // DEBUG
-  logger.debug("target", target);
-  logger.debug("context", context);
+  // logger.debug("target", target);
+  // logger.debug("context", context);
 
   // Remove whitespace from chat message
   const name = mergeUserDisplayName(context);
+  logger.info(`Message from Discord: [${name}] ${msg}`);
   const discordSegment = "`" + name + "`: " + escapeMassMension(msg);
 
   sendToDiscord(discordSegment);
@@ -109,13 +110,19 @@ function onDisconnectedHandler(reason) {
 
 // discord
 discordBotClient.on("messageCreate", onMessageCreateHandler);
-// ignore self comment
 function onMessageCreateHandler(message) {
+  // ignore self comment
   if (!message.author.bot && !message.author.system) {
-    logger.info(message);
-
-    const username = message.author.username;
-    const content = message.content;
-    client.say(config.TW_CHANNEL_NAME, `from discord [${username}] ${content}`);
+    if (message.channelId === config.DISCORD_CHANNEL_ID) {
+      logger.info(
+        `Message from Discord: [${message.author.username}] ${message.content}`
+      );
+      const username = message.author.username;
+      const content = message.content;
+      client.say(
+        config.TW_CHANNEL_NAME,
+        `from discord [${username}] ${content}`
+      );
+    }
   }
 }
