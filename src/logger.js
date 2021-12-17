@@ -1,4 +1,4 @@
-const log4js = require('log4js');
+const log4js = require("log4js");
 
 // logger
 const logger = log4js.getLogger();
@@ -12,9 +12,9 @@ const logger = log4js.getLogger();
 // mark
 // off
 if (process.env.NODE_ENV === "development") {
-  logger.level = 'all';
+  logger.level = "all";
 } else {
-  logger.level = 'warn';
+  logger.level = "info";
 }
 
 module.exports.logger = logger;

@@ -1,5 +1,5 @@
 const { logger } = require("./src/logger");
-logger.info(`logger initialized level: ${logger.level}`)
+logger.info(`logger initialized level: ${logger.level}`);
 
 const forever = require("forever-monitor");
 const path = require("path");
@@ -8,9 +8,9 @@ const path = require("path");
 // init process.env
 process.env.NODE_CONFIG_DIR = path.join(__dirname, "./config");
 
-logger.mark("//////////////////////");
-logger.mark("//  Ctrl-C to exit  //");
-logger.mark("//////////////////////");
+logger.info("//////////////////////");
+logger.info("//  Ctrl-C to exit  //");
+logger.info("//////////////////////");
 
 const child = new forever.Monitor(path.join(__dirname, "./src/twitchBot.js"), {
   //
@@ -21,19 +21,19 @@ const child = new forever.Monitor(path.join(__dirname, "./src/twitchBot.js"), {
 });
 
 if (process.env.NODE_ENV === "development") {
-  logger.info("//////////////////////");
-  logger.info("//    DEV mode!     //");
-  logger.info("//////////////////////");
+  logger.debug("//////////////////////");
+  logger.debug("//    DEV mode!     //");
+  logger.debug("//////////////////////");
   // init child process of something.js
   // define events
-  child.on("watch:restart", function(info) {
+  child.on("watch:restart", function (info) {
     logger.error("Restaring script because " + info.file + " changed");
   });
 }
-child.on("restart", function() {
+child.on("restart", function () {
   logger.error("Forever restarting script for " + child.times + " time");
 });
-child.on("exit:code", function(code) {
+child.on("exit:code", function (code) {
   logger.error("Forever detected script exited with code " + code);
 });
 

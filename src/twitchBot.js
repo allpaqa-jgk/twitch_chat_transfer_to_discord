@@ -5,7 +5,7 @@ const discordBotClient = require("./discordBot").client;
 logger.debug("config", config);
 let client;
 
-logger.mark("* tmi is starting...");
+logger.info("* tmi is starting...");
 
 function botUsername() {
   return config.BOT_USERNAME || config.TW_CHANNEL_NAME + "_bot";
@@ -32,7 +32,7 @@ if (config.TW_OAUTH_TOKEN && config.TW_CHANNEL_NAME) {
 
   // Connect to Twitch:
   client.connect().catch((e) => {
-    logger.info(e);
+    logger.error(e);
   });
 }
 
@@ -50,7 +50,7 @@ function sendToDiscord(msg) {
         logger.debug("msg", msg);
 
         return channel.send(msg).catch((e) => {
-          logger.info(e);
+          logger.error(e);
         });
       }
     })
@@ -93,12 +93,12 @@ function onMessageHandler(target, context, msg, self) {
 
 // Called every time the bot connects to Twitch chat
 function onConnectedHandler(addr, port) {
-  logger.mark(`* tmi is connected to ${addr}:${port}...`);
+  logger.info(`* tmi is connected to ${addr}:${port}...`);
 }
 
 // onDisconnectedHandler(reason: string)
 function onDisconnectedHandler(reason) {
-  logger.mark(`* tmi is disconnected to ${reason}...`);
+  logger.info(`* tmi is disconnected to ${reason}...`);
   setTimeout(() => {
     if (typeof client.reconnect === "function")
       client.reconnect().catch((e) => {
