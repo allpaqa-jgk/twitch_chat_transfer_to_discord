@@ -7,4 +7,4 @@ services:
     working_dir: /home/container
     volumes:
       - .:/home/container
-    command: yarn dev
+    command: npm run dev
