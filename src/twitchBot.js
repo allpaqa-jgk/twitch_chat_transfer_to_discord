@@ -112,17 +112,19 @@ function onDisconnectedHandler(reason) {
 discordBotClient.on("messageCreate", onMessageCreateHandler);
 function onMessageCreateHandler(message) {
   // ignore self comment
+  // logger.info(message);
   if (!message.author.bot && !message.author.system) {
     if (message.channelId === config.DISCORD_CHANNEL_ID) {
-      logger.info(
-        `Message from Discord: [${message.author.username}] ${message.content}`
-      );
       const username = message.author.username;
       const content = message.content;
-      client.say(
-        config.TW_CHANNEL_NAME,
-        `from discord [${username}] ${content}`
-      );
+      if (content === "") {
+        logger.info(
+          "message.content is empty. Please check dev portal > setting > bot > privileged Gateway Intents > MESSAGE CONTENT INTENT"
+        );
+      } else {
+        logger.info(`Message from Discord: [${username}] ${content}`);
+        client.say(config.TW_CHANNEL_NAME, `d> [${username}] ${content}`);
+      }
     }
   }
 }
